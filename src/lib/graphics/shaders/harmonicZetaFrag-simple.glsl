@@ -5,7 +5,7 @@ uniform vec3 color2;
 uniform vec3 color3;
 uniform vec2 mouse;
 
-float scale = 100.0;
+float scale = 200.0;
 float lineWidth = 0.1;  // Width of the vertical lines
 
 // Function to compute the harmonic number H_n
@@ -13,7 +13,7 @@ float harmonicNumber(float n) {
     return log(n) + 0.5772156649 + 1.0 / (2.0 * n); // Approximation: H_n ≈ ln(n) + γ + 1/(2n)
 }
 
-// Function to compute zeta* in full complex form: Σ (cos(t log n) + i sin(t log n)) / ((sigma * n) / H_n)
+// Function to compute zeta* in full complex form: Σ (cos(t log n) + i sin(t log n)) / ((sigma) / H_n)
 vec2 zetaStarComplex(float sigma, float t) {
     vec2 sum = vec2(0.0, 0.0); // (real part, imaginary part)
     const int N = 100; // Number of terms in the series for approximation
@@ -28,8 +28,8 @@ vec2 zetaStarComplex(float sigma, float t) {
         float imaginaryPart = hn * sin(-angle);  // Use n^{-it} for imaginary part
 
         // Sum the real and imaginary parts divided by (σ * n)
-        sum.x += realPart / (sigma * float(n));
-        sum.y += imaginaryPart / (sigma * float(n));
+        sum.x += realPart / (sigma);
+        sum.y += imaginaryPart / (sigma);
     }
 
     return sum; // Return the complex result as (real, imaginary)

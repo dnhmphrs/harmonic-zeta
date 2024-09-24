@@ -5,7 +5,7 @@ uniform vec3 color2;
 uniform vec3 color3;
 uniform vec2 mouse;
 
-float scale = 200.0;
+float scale = 1000.0;
 float lineWidth = 0.1;  // Width of the vertical lines
 
 // Function to compute the harmonic number H_n
@@ -13,22 +13,23 @@ float harmonicNumber(float n) {
     return log(n) + 0.5772156649 + 1.0 / (2.0 * n); // Approximation: H_n ≈ ln(n) + γ + 1/(2n)
 }
 
-// Function to compute zeta* as Σ σ⋅n^it / H_n
+// Function to compute zeta* in full complex form: Σ (cos(t log n) + i sin(t log n)) / ((sigma) / H_n)
 vec2 zetaStarComplex(float sigma, float t) {
     vec2 sum = vec2(0.0, 0.0); // (real part, imaginary part)
     const int N = 100; // Number of terms in the series for approximation
 
     for (int n = 1; n <= N; ++n) {
-        float hn = harmonicNumber(float(n));  // Compute H_n
-        float angle = t * log(float(n));      // Angle for n^it = cos(t log n) + i sin(t log n)
-        
-        // Compute σ * n^it
-        float realPart = sigma * cos(angle);  // Real part of σ * n^it
-        float imaginaryPart = sigma * sin(angle);  // Imaginary part of σ * n^it
+        float hn = harmonicNumber(float(n));     // Compute H_n
+        float angle = t * log(float(n));         // Angle for n^it = cos(t log n) + i sin(t log n)
 
-        // Sum the real and imaginary parts divided by H_n
-        sum.x += realPart / hn;
-        sum.y += imaginaryPart / hn;
+        // Real part of H_n * n^{-it}
+        float realPart = hn * cos(-angle);  // Use n^{-it} for real part
+        // Imaginary part of H_n * n^{-it}
+        float imaginaryPart = hn * sin(-angle);  // Use n^{-it} for imaginary part
+
+        // Sum the real and imaginary parts divided by (σ * n)
+        sum.x += realPart / (sigma);
+        sum.y += imaginaryPart / (sigma);
     }
 
     return sum; // Return the complex result as (real, imaginary)
@@ -36,8 +37,9 @@ vec2 zetaStarComplex(float sigma, float t) {
 
 void main() {
     // Map the fragment coordinates to the complex plane
+    float adaptedScale = scale * mouse.x;
     float sigma = (vUv.y * 2.0 * scale) - (1.0 * scale); // Real part of s
-    float t = (vUv.x * 2.0 * scale) - (1.0 * scale);     // Imaginary part of s
+    float t = (vUv.x * 2.0 * adaptedScale) - (1.0 * adaptedScale);     // Imaginary part of s
 
     // Compute zetaStarComplex(sigma, t)
     vec2 zetaStarValue = zetaStarComplex(sigma, t);
@@ -50,14 +52,15 @@ void main() {
 
     // Create gradients for visualization
     vec3 gradient1 = mix(color1, color2, normalizedMagnitude);
-    vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25 * atan(normalizedMagnitude));
-    
-        // Add vertical red lines at every integer on the y-axis (mapped to the x-axis)
-    float xPos = mod(vUv.x * 2.0 * scale - scale, 1.0); // Position for integer lines on the x-axis
-    if (abs(xPos) < abs(lineWidth)) {
-        gradient2 = vec3(0.0, 0.3, 0.4); // Red line
-    }
+    vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25 * sin(normalizedMagnitude * abs((2.0 * mouse.y))));
+
+    // Add vertical red lines at every integer on the y-axis (mapped to the x-axis)
+    // float xPos = mod(vUv.x * 2.0 * adaptedScale - adaptedScale, 1.0); // Position for integer lines on the x-axis
+    // if (abs(xPos) < abs(lineWidth / adaptedScale)) {
+    //     gradient2 = vec3(1.0, 0.0, 0.0); // Red line
+    // }
 
     // Set the fragment color
     gl_FragColor = vec4(gradient2, 1.0);
 }
+

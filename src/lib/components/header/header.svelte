@@ -30,6 +30,10 @@
 			href: '/inverse'
 		},
 		{
+			name: 'harmonic Zeta - Scaled',
+			href: '/scaled'
+		},
+		{
 			name: 'harmonic Zeta - Inverse Scaled',
 			href: '/inverse-scaled'
 		},
