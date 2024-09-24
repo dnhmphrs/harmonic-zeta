@@ -51,13 +51,13 @@ void main() {
 
     // Create gradients for visualization
     vec3 gradient1 = mix(color1, color2, normalizedMagnitude);
-    vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25 * sin(normalizedMagnitude * abs(mouse.x)));
+    vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25 * sin(normalizedMagnitude * abs((2.0 * mouse.y))));
 
     // Add vertical red lines at every integer on the y-axis (mapped to the x-axis)
-    float xPos = mod(vUv.x * 2.0 * adaptedScale - adaptedScale, 1.0); // Position for integer lines on the x-axis
-    if (abs(xPos) < abs(lineWidth / adaptedScale)) {
-        gradient2 = vec3(1.0, 0.0, 0.0); // Red line
-    }
+    // float xPos = mod(vUv.x * 2.0 * adaptedScale - adaptedScale, 1.0); // Position for integer lines on the x-axis
+    // if (abs(xPos) < abs(lineWidth / adaptedScale)) {
+    //     gradient2 = vec3(1.0, 0.0, 0.0); // Red line
+    // }
 
     // Set the fragment color
     gl_FragColor = vec4(gradient2, 1.0);
