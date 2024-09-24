@@ -5,15 +5,17 @@ uniform vec3 color2;
 uniform vec3 color3;
 uniform vec2 mouse;
 
+float e = 2.718281828459045; // Euler's number
+
 float scale = 200.0;
-float lineWidth = 0.1;  // Width of the vertical lines
+float lineWidth = 0.2;   // Width of the vertical lines
 
 // Function to compute the harmonic number H_n
 float harmonicNumber(float n) {
     return log(n) + 0.5772156649 + 1.0 / (2.0 * n); // Approximation: H_n ≈ ln(n) + γ + 1/(2n)
 }
 
-// Function to compute zeta* in full complex form: Σ (cos(t log n) + i sin(t log n)) / ((sigma) / H_n)
+// Function to compute zeta* as Σ H_n / σ⋅n^-it
 vec2 zetaStarComplex(float sigma, float t) {
     vec2 sum = vec2(0.0, 0.0); // (real part, imaginary part)
     const int N = 100; // Number of terms in the series for approximation
@@ -55,7 +57,7 @@ void main() {
     vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25 * sin(normalizedMagnitude));
 
     // Add vertical red lines at every integer on the y-axis (mapped to the x-axis)
-    float xPos = mod(vUv.x * 2.0 * scale - scale, 1.0); // Position for integer lines on the x-axis
+    float xPos = mod(vUv.x * 2.0 * scale - scale, e); // Position for integer lines on the x-axis
     if (abs(xPos) < abs(lineWidth)) {
         gradient2 = vec3(0.0, 0.3, 0.4); // Red line
     }

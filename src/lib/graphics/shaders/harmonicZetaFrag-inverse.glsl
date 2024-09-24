@@ -5,8 +5,10 @@ uniform vec3 color2;
 uniform vec3 color3;
 uniform vec2 mouse;
 
+float e = 2.718281828459045; // Euler's number
+
 float scale = 200.0;
-float lineWidth = 0.1;  // Width of the vertical lines
+float lineWidth = 0.2;  // Width of the vertical lines
 
 // Function to compute the harmonic number H_n
 float harmonicNumber(float n) {
@@ -53,10 +55,10 @@ void main() {
     vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25 * atan(normalizedMagnitude));
     
         // Add vertical red lines at every integer on the y-axis (mapped to the x-axis)
-    float xPos = mod(vUv.x * 2.0 * scale - scale, 1.0); // Position for integer lines on the x-axis
-    if (abs(xPos) < abs(lineWidth)) {
-        gradient2 = vec3(0.0, 0.3, 0.4); // Red line
-    }
+    float xPos = mod(vUv.x * 2.0 * scale - scale, e); // Position for integer lines on the x-axis
+    // if (abs(xPos) < abs(lineWidth)) {
+    //     gradient2 = vec3(0.0, 0.3, 0.4); // Red line
+    // }
 
     // Set the fragment color
     gl_FragColor = vec4(gradient2, 1.0);
