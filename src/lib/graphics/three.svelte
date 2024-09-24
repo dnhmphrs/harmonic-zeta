@@ -58,8 +58,8 @@
 			uniforms: {
 				...uniformsBase,
 				color1: { value: colors.color1 },
-				color2: { value: colors.color5 },
-				color3: { value: colors.color9 },
+				color2: { value: colors.color2 },
+				color3: { value: colors.color3 },
 			}
 		});
 
@@ -69,8 +69,8 @@
 			uniforms: {
 				...uniformsBase,
 				color1: { value: colors.color1 },
-				color2: { value: colors.color5 },
-				color3: { value: colors.color9 },
+				color2: { value: colors.color2 },
+				color3: { value: colors.color3 },
 			}
 		});
 
@@ -80,8 +80,8 @@
 			uniforms: {
 				...uniformsBase,
 				color1: { value: colors.color1 },
-				color2: { value: colors.color5 },
-				color3: { value: colors.color9 },
+				color2: { value: colors.color2 },
+				color3: { value: colors.color3 },
 			}
 		});
 	}

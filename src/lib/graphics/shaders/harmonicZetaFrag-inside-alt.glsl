@@ -5,7 +5,8 @@ uniform vec3 color2;
 uniform vec3 color3;
 uniform vec2 mouse;
 
-float scale = 200.0;
+float scale = 1000.0;
+// float scale = 10000000.0;
 float lineWidth = 1.0;  // Width of the vertical lines
 
 // Function to compute the harmonic number H_n

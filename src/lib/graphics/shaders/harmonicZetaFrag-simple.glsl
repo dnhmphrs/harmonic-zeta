@@ -57,7 +57,7 @@ void main() {
     // Add vertical red lines at every integer on the y-axis (mapped to the x-axis)
     float xPos = mod(vUv.x * 2.0 * scale - scale, 1.0); // Position for integer lines on the x-axis
     if (abs(xPos) < abs(lineWidth)) {
-        gradient2 = vec3(1.0, 0.0, 0.0); // Red line
+        gradient2 = vec3(0.0, 0.0, 0.0); // Red line
     }
 
     // Set the fragment color
