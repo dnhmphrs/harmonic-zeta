@@ -22,16 +22,16 @@
 	// stub data out
 	const navItems = [
 		{
-			name: 'harmonic Zeta - Simple',
+			name: 'harmonic Zeta',
 			href: '/'
 		},
 		{
-			name: 'harmonic Zeta - Inside',
-			href: '/inside'
+			name: 'harmonic Zeta - Inverse',
+			href: '/inverse'
 		},
 		{
-			name: 'harmonic Zeta - Inside Alt',
-			href: '/inside-alt'
+			name: 'harmonic Zeta - Inverse Scaled',
+			href: '/inverse-scaled'
 		},
 	];
 

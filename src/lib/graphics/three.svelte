@@ -9,10 +9,10 @@
 
 	import vertexShader from './shaders/vertexShader-three.glsl';
 	import fragmentShader_harmonic_zeta_simple from './shaders/harmonicZetaFrag-simple.glsl';
-	import fragmentShader_harmonic_zeta_inside from './shaders/harmonicZetaFrag-inside.glsl';
-	import fragmentShader_harmonic_zeta_inside_alt from './shaders/harmonicZetaFrag-inside-alt.glsl';
+	import fragmentShader_harmonic_zeta_inverse from './shaders/harmonicZetaFrag-inverse.glsl';
+	import fragmentShader_harmonic_zeta_inverse_scaled from './shaders/harmonicZetaFrag-inverse-scaled.glsl';
 
-	let shaderMaterial_harmonic_zeta_simple, shaderMaterial_harmonic_zeta_inside, shaderMaterial_harmonic_zeta_inside_alt;
+	let shaderMaterial_harmonic_zeta_simple, shaderMaterial_harmonic_zeta_inverse, shaderMaterial_harmonic_zeta_inverse_scaled;
 
 	let container;
 	let stats;
@@ -63,9 +63,9 @@
 			}
 		});
 
-		shaderMaterial_harmonic_zeta_inside = new THREE.ShaderMaterial({
+		shaderMaterial_harmonic_zeta_inverse = new THREE.ShaderMaterial({
 			vertexShader: vertexShader,
-			fragmentShader: fragmentShader_harmonic_zeta_inside,
+			fragmentShader: fragmentShader_harmonic_zeta_inverse,
 			uniforms: {
 				...uniformsBase,
 				color1: { value: colors.color1 },
@@ -74,9 +74,9 @@
 			}
 		});
 
-		shaderMaterial_harmonic_zeta_inside_alt = new THREE.ShaderMaterial({
+		shaderMaterial_harmonic_zeta_inverse_scaled = new THREE.ShaderMaterial({
 			vertexShader: vertexShader,
-			fragmentShader: fragmentShader_harmonic_zeta_inside_alt,
+			fragmentShader: fragmentShader_harmonic_zeta_inverse_scaled,
 			uniforms: {
 				...uniformsBase,
 				color1: { value: colors.color1 },
@@ -117,15 +117,15 @@
 		scene.add(plane4);
 	}
 
-	function setInside() {
+	function setInverse() {
 
-		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_inside);
+		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_inverse);
 		scene.add(plane4);
 	}
 
-	function setInsideAlt() {
+	function setInverseScaled() {
 
-		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_inside_alt);
+		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_inverse_scaled);
 		scene.add(plane4);
 	}
 
@@ -135,12 +135,12 @@
 			setSimple();
 		}
 
-		if ($page.url.pathname == '/inside') {
-			setInside();
+		if ($page.url.pathname == '/inverse') {
+			setInverse();
 		}
 
-		if ($page.url.pathname == '/inside-alt') {
-			setInsideAlt();
+		if ($page.url.pathname == '/inverse-scaled') {
+			setInverseScaled();
 		}
 	}
 
