@@ -19,13 +19,13 @@ vec2 zetaStarComplex(float sigma, float t) {
     const int N = 200; // Number of terms in the series for approximation
 
     for (int n = 1; n <= N; ++n) {
-        // float hn = harmonicNumber(float(n));     // Compute H_n
+        float hn = harmonicNumber(float(n));     // Compute H_n
         float angle = t * log(float(n));         // Angle for n^it = cos(t log n) + i sin(t log n)
 
         // Real part of H_n * n^{-it}
-        float realPart = cos(-angle);  // Use n^{-it} for real part
+        float realPart = hn * cos(-angle);  // Use n^{-it} for real part
         // Imaginary part of H_n * n^{-it}
-        float imaginaryPart = sin(-angle);  // Use n^{-it} for imaginary part
+        float imaginaryPart = hn * sin(-angle);  // Use n^{-it} for imaginary part
 
         // Sum the real and imaginary parts divided by (σ * n)
         sum.x += realPart / (sigma);

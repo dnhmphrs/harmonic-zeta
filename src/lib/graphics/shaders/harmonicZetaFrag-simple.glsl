@@ -7,7 +7,7 @@ uniform vec2 mouse;
 
 float e = 2.718281828459045; // Euler's number
 
-float scale = 100.0;
+float scale = 200.0;
 float lineWidth = 0.1;   // Width of the vertical lines
 
 // Function to compute the harmonic number H_n
@@ -18,16 +18,18 @@ float harmonicNumber(float n) {
 // Function to compute zeta* as Σ H_n / σ⋅n^-it
 vec2 zetaStarComplex(float sigma, float t) {
     vec2 sum = vec2(0.0, 0.0); // (real part, imaginary part)
-    const int N = 100; // Number of terms in the series for approximation
+    const int N = 200; // Number of terms in the series for approximation
 
     for (int n = 1; n <= N; ++n) {
-        float hn = harmonicNumber(float(n));     // Compute H_n
+        // float hn = harmonicNumber(float(n));     // Compute H_n
         float angle = t * log(float(n));         // Angle for n^it = cos(t log n) + i sin(t log n)
 
         // Real part of H_n * n^{-it}
-        float realPart = hn * cos(-angle);  // Use n^{-it} for real part
+        // float realPart = hn * cos(-angle);  // Use n^{-it} for real part
+        float realPart = cos(-angle);
         // Imaginary part of H_n * n^{-it}
-        float imaginaryPart = hn * sin(-angle);  // Use n^{-it} for imaginary part
+        // float imaginaryPart = hn * sin(-angle);  // Use n^{-it} for imaginary part
+        float imaginaryPart = sin(-angle);
 
         // Sum the real and imaginary parts divided by (σ * n)
         sum.x += realPart / (sigma);

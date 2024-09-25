@@ -6,30 +6,29 @@ uniform vec3 color3;
 uniform vec2 mouse;
 
 float scale = 1000.0;
-float lineWidth = 0.1;  // Width of the vertical lines
+float lineWidth = 0.1;  // Width of the horizontal lines
 
 // Function to compute the harmonic number H_n
 float harmonicNumber(float n) {
     return log(n) + 0.5772156649 + 1.0 / (2.0 * n); // Approximation: H_n ≈ ln(n) + γ + 1/(2n)
 }
 
-// Function to compute zeta* in full complex form: Σ (cos(t log n) + i sin(t log n)) / ((sigma) / H_n)
+// Function to compute zeta* as Σ σ⋅n^it / H_n
 vec2 zetaStarComplex(float sigma, float t) {
     vec2 sum = vec2(0.0, 0.0); // (real part, imaginary part)
     const int N = 200; // Number of terms in the series for approximation
 
     for (int n = 1; n <= N; ++n) {
-        // float hn = harmonicNumber(float(n));     // Compute H_n
-        float angle = t * log(float(n));         // Angle for n^it = cos(t log n) + i sin(t log n)
+        float hn = harmonicNumber(float(n));  // Compute H_n
+        float angle = t * log(float(n));      // Angle for n^it = cos(t log n) + i sin(t log n)
+        
+        // Compute σ * n^it
+        float realPart = sigma * cos(angle);  // Real part of σ * n^it
+        float imaginaryPart = sigma * sin(angle);  // Imaginary part of σ * n^it
 
-        // Real part of H_n * n^{-it}
-        float realPart = cos(-angle);  // Use n^{-it} for real part
-        // Imaginary part of H_n * n^{-it}
-        float imaginaryPart = sin(-angle);  // Use n^{-it} for imaginary part
-
-        // Sum the real and imaginary parts divided by (σ * n)
-        sum.x += realPart / (sigma);
-        sum.y += imaginaryPart / (sigma);
+        // Sum the real and imaginary parts divided by H_n
+        sum.x += realPart / hn;
+        sum.y += imaginaryPart / hn;
     }
 
     return sum; // Return the complex result as (real, imaginary)
@@ -68,11 +67,10 @@ void main() {
     // Check if the current y position (t) is close to one of the zero values and draw horizontal lines
     for (int i = 0; i < 29; i++) {
         if (abs(t - zeros[i]) < lineWidth || abs(t + zeros[i]) < lineWidth) {
-            gradient2 = vec3(1.0, 0.0, 0.0); // Red line at the non-trivial zero position (both positive and negative)
+            gradient2 = vec3(0.0, 0.5, 0.5); // Red line at the non-trivial zero position (both positive and negative)
         }
     }
 
     // Set the fragment color
     gl_FragColor = vec4(gradient2, 1.0);
 }
-
