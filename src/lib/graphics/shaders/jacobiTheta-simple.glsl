@@ -48,7 +48,7 @@ void main() {
 
     // Create gradients for visualization
     vec3 gradient1 = mix(color1, color2, normalizedMagnitude);
-    vec3 gradient2 = mix(color3, gradient1, 0.0 + 0.25 * normalizedMagnitude * 0.5 * normalizedPhase);
+    vec3 gradient2 = mix(color3, gradient1, 0.0 + 0.5 * normalizedMagnitude * 0.5 * normalizedPhase);
 
     // Set the fragment color
     gl_FragColor = vec4(gradient2, 1.0);
