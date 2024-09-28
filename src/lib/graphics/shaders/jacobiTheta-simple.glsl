@@ -14,6 +14,7 @@ vec2 jacobiTheta(float z, float tau) {
     vec2 sum = vec2(0.0, 0.0); // (real part, imaginary part)
     const int N = 25; // Number of terms in the series for approximation
 
+
     for (int n = -N; n <= N; ++n) {
         float nSquaredTau = float(n * n) * tau;
         float nZ = float(n) * z;
@@ -32,7 +33,7 @@ vec2 jacobiTheta(float z, float tau) {
 void main() {
     // Map the fragment coordinates to the complex plane
     float adaptedScale = scale;
-    float z = (vUv.x * 2.0 * adaptedScale) - (1.0 * adaptedScale);     // z coordinate (related to complex input s)
+    float z = (vUv.x * 1.0 * adaptedScale) - (0.5 * adaptedScale);     // z coordinate (related to complex input s)
     float tau = (vUv.y * 1.0 * adaptedScale) - (0.5 * adaptedScale);   // tau coordinate (analogous to sigma)
 
     // Compute the Jacobi Theta function
