@@ -6,13 +6,13 @@ uniform vec3 color3;
 uniform vec2 mouse;
 
 float pi = 3.14159265359;
-float scale = 10.0;
+float scale = 50.0;
 float lineWidth = 0.1;   // Width of the vertical lines
 
 // Function to compute the Jacobi Theta function as a sum approximation
 vec2 jacobiTheta(float z, float tau) {
     vec2 sum = vec2(0.0, 0.0); // (real part, imaginary part)
-    const int N = 100; // Number of terms in the series for approximation
+    const int N = 25; // Number of terms in the series for approximation
 
     for (int n = -N; n <= N; ++n) {
         float nSquaredTau = float(n * n) * tau;
@@ -36,7 +36,7 @@ void main() {
     float tau = (vUv.y * 1.0 * adaptedScale) - (0.5 * adaptedScale);   // tau coordinate (analogous to sigma)
 
     // Compute the Jacobi Theta function
-    vec2 thetaValue = jacobiTheta(z * mouse.x * 2.0, tau * mouse.y * 0.1);
+    vec2 thetaValue = jacobiTheta(z * abs(mouse.x) * 2.0, tau * abs(mouse.y) * 0.1);
 
     // Get the magnitude / phase of the complex value for visualization
     float magnitude = length(thetaValue); // Magnitude of the complex number
