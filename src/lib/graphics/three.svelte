@@ -12,8 +12,9 @@
 	import fragmentShader_harmonic_zeta_inverse from './shaders/harmonicZetaFrag-inverse.glsl';
 	import fragmentShader_harmonic_zeta_simple_scaled from './shaders/harmonicZetaFrag-simple-scaled.glsl';
 	import fragmentShader_harmonic_zeta_inverse_scaled from './shaders/harmonicZetaFrag-inverse-scaled.glsl';
+	import fragmentShader_jacobi_theta_simple from './shaders/jacobiTheta-simple.glsl';
 
-	let shaderMaterial_harmonic_zeta_simple, shaderMaterial_harmonic_zeta_inverse, shaderMaterial_harmonic_zeta_simple_scaled, shaderMaterial_harmonic_zeta_inverse_scaled;
+	let shaderMaterial_jacobi_theta_simple, shaderMaterial_harmonic_zeta_simple, shaderMaterial_harmonic_zeta_inverse, shaderMaterial_harmonic_zeta_simple_scaled, shaderMaterial_harmonic_zeta_inverse_scaled;
 
 	let container;
 	let stats;
@@ -96,6 +97,17 @@
 				color3: { value: colors.color3 },
 			}
 		});
+
+		shaderMaterial_jacobi_theta_simple = new THREE.ShaderMaterial({
+			vertexShader: vertexShader,
+			fragmentShader: fragmentShader_jacobi_theta_simple,
+			uniforms: {
+				...uniformsBase,
+				color1: { value: colors.color1 },
+				color2: { value: colors.color2 },
+				color3: { value: colors.color3 },
+			}
+		});
 	}
 
 	function init() {
@@ -147,22 +159,36 @@
 		scene.add(plane4);
 	}
 
+	function setJacobiThetaSimple() {
+
+		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_jacobi_theta_simple);
+		scene.add(plane4);
+	}
+
 	function setScene () {
 
+		// if ($page.url.pathname == '/') {
+		// 	setSimple();
+		// }
+
+		// if ($page.url.pathname == '/inverse') {
+		// 	setInverse();
+		// }
+
+		// if ($page.url.pathname == '/scaled') {
+		// 	setSimpleScaled();
+		// }
+
 		if ($page.url.pathname == '/') {
-			setSimple();
-		}
-
-		if ($page.url.pathname == '/inverse') {
-			setInverse();
-		}
-
-		if ($page.url.pathname == '/scaled') {
-			setSimpleScaled();
+			setInverseScaled();
 		}
 
 		if ($page.url.pathname == '/inverse-scaled') {
 			setInverseScaled();
+		}
+
+		if ($page.url.pathname == '/jacobi-theta') {
+			setJacobiThetaSimple();
 		}
 	}
 

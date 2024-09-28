@@ -21,21 +21,25 @@
 
 	// stub data out
 	const navItems = [
+		// {
+		// 	name: 'harmonic Zeta',
+		// 	href: '/'
+		// },
+		// {
+		// 	name: 'harmonic Zeta - Inverse',
+		// 	href: '/inverse'
+		// },
+		// {
+		// 	name: 'harmonic Zeta - Scaled',
+		// 	href: '/scaled'
+		// },
 		{
 			name: 'harmonic Zeta',
 			href: '/'
 		},
 		{
-			name: 'harmonic Zeta - Inverse',
-			href: '/inverse'
-		},
-		{
-			name: 'harmonic Zeta - Scaled',
-			href: '/scaled'
-		},
-		{
-			name: 'harmonic Zeta - Inverse Scaled',
-			href: '/inverse-scaled'
+			name: 'jacobi theta',
+			href: '/jacobi-theta'
 		},
 	];
 
