@@ -115,7 +115,7 @@ void main() {
 
     // Check if the current y position (t) is close to one of the zero values and draw horizontal lines
     for (int i = 0; i < 29; i++) {
-        if (abs(adaptedTau - zeros[i]) < lineWidth || abs(adaptedTau + zeros[i]) < lineWidth) {
+        if (abs(t - zeros[i]) < lineWidth || abs(t + zeros[i]) < lineWidth) {
             gradient2 = vec3(0.0, 0.5, 0.5); // Red line at the non-trivial zero position (both positive and negative)
         }
     }

@@ -50,8 +50,8 @@
 		// 	href: '/jacobi-theta-primes'
 		// },
 		{
-			name: 'harmonic Zeta - alternate',
-			href: '/jacobi-theta-primes-inverted'
+			name: 'jacobi theta - modified',
+			href: '/jacobi-theta-modified'
 		},
 	];
 

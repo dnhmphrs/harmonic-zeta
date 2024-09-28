@@ -233,7 +233,7 @@
 			setJacobiThetaPrimes();
 		}
 
-		if ($page.url.pathname == '/jacobi-theta-primes-inverted') {
+		if ($page.url.pathname == '/jacobi-theta-modified') {
 			setJacobiThetaPrimesInverted();
 		}
 	}

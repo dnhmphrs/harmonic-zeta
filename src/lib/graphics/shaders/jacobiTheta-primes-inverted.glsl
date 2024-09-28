@@ -38,7 +38,7 @@ vec2 jacobiTheta(float z, float tau) {
 
     for (int i = -N; i < N; ++i) {
         float n = float(i);
-        float angle = tau * n * n + z * n;
+        float angle = tau * n * n + z * tau * n;
 
         // Real part of the prime-modified theta function
         float realPart = cos(angle);
@@ -79,20 +79,20 @@ void main() {
     vec3 gradient1 = mix(color1, color2, normalizedMagnitude);
     vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25 * cos(normalizedMagnitude * abs((1.0 * mouse.y))));
 
-    // Define the first 29 non-trivial zeros of the zeta function (imaginary parts)
-    float zeros[29] = float[](14.135, 21.022, 25.011, 30.425, 32.935, 
-                              37.586, 40.918, 43.327, 48.005, 49.773, 
-                              52.970, 56.446, 59.347, 60.831, 65.112, 
-                              67.079, 69.546, 72.067, 75.704, 77.145, 
-                              79.337, 82.910, 84.735, 87.099, 88.809, 
-                              92.491, 94.651, 95.870, 98.831);
+    // // Define the first 29 non-trivial zeros of the zeta function (imaginary parts)
+    // float zeros[29] = float[](14.135, 21.022, 25.011, 30.425, 32.935, 
+    //                           37.586, 40.918, 43.327, 48.005, 49.773, 
+    //                           52.970, 56.446, 59.347, 60.831, 65.112, 
+    //                           67.079, 69.546, 72.067, 75.704, 77.145, 
+    //                           79.337, 82.910, 84.735, 87.099, 88.809, 
+    //                           92.491, 94.651, 95.870, 98.831);
 
-    // Check if the current y position (t) is close to one of the zero values and draw horizontal lines
-    for (int i = 0; i < 29; i++) {
-        if (abs(adaptedTau * scale - zeros[i]) < lineWidth || abs(adaptedTau * scale  + zeros[i]) < lineWidth) {
-            gradient2 = vec3(0.0, 0.5, 0.5); // Red line at the non-trivial zero position (both positive and negative)
-        }
-    }
+    // // Check if the current y position (t) is close to one of the zero values and draw horizontal lines
+    // for (int i = 0; i < 29; i++) {
+    //     if (abs(adaptedTau * adaptedScale - zeros[i]) < lineWidth || abs(adaptedTau * adaptedScale + zeros[i]) < lineWidth) {
+    //         gradient2 = vec3(0.0, 0.5, 0.5); // Red line at the non-trivial zero position (both positive and negative)
+    //     }
+    // }
         
     // Set the fragment color
     gl_FragColor = vec4(gradient2, 1.0);
