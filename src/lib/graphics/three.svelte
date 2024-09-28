@@ -8,13 +8,17 @@
 	import Stats from 'stats.js'
 
 	import vertexShader from './shaders/vertexShader-three.glsl';
-	import fragmentShader_harmonic_zeta_simple from './shaders/harmonicZetaFrag-simple.glsl';
-	import fragmentShader_harmonic_zeta_inverse from './shaders/harmonicZetaFrag-inverse.glsl';
+	// import fragmentShader_harmonic_zeta_simple from './shaders/harmonicZetaFrag-simple.glsl';
+	// import fragmentShader_harmonic_zeta_inverse from './shaders/harmonicZetaFrag-inverse.glsl';
 	import fragmentShader_harmonic_zeta_simple_scaled from './shaders/harmonicZetaFrag-simple-scaled.glsl';
 	import fragmentShader_harmonic_zeta_inverse_scaled from './shaders/harmonicZetaFrag-inverse-scaled.glsl';
 	import fragmentShader_jacobi_theta_simple from './shaders/jacobiTheta-simple.glsl';
+	import fragmentShader_jacobi_theta_primes from './shaders/jacobiTheta-primes.glsl';
+	import fragmentShader_jacobi_theta_primes_inverted from './shaders/jacobiTheta-primes-inverted.glsl';
 
-	let shaderMaterial_jacobi_theta_simple, shaderMaterial_harmonic_zeta_simple, shaderMaterial_harmonic_zeta_inverse, shaderMaterial_harmonic_zeta_simple_scaled, shaderMaterial_harmonic_zeta_inverse_scaled;
+
+	// let shaderMaterial_harmonic_zeta_simple, shaderMaterial_harmonic_zeta_inverse, shaderMaterial_harmonic_zeta_simple_scaled;
+	let shaderMaterial_harmonic_zeta_simple_scaled, shaderMaterial_jacobi_theta_simple, shaderMaterial_harmonic_zeta_inverse_scaled, shaderMaterial_jacobi_theta_primes, shaderMaterial_jacobi_theta_primes_inverted;
 
 	let container;
 	let stats;
@@ -54,27 +58,27 @@
 			color0: new THREE.Color(0x232323),
 		}
 
-		shaderMaterial_harmonic_zeta_simple = new THREE.ShaderMaterial({
-			vertexShader: vertexShader,
-			fragmentShader: fragmentShader_harmonic_zeta_simple,
-			uniforms: {
-				...uniformsBase,
-				color1: { value: colors.color1 },
-				color2: { value: colors.color2 },
-				color3: { value: colors.color3 },
-			}
-		});
+		// shaderMaterial_harmonic_zeta_simple = new THREE.ShaderMaterial({
+		// 	vertexShader: vertexShader,
+		// 	fragmentShader: fragmentShader_harmonic_zeta_simple,
+		// 	uniforms: {
+		// 		...uniformsBase,
+		// 		color1: { value: colors.color1 },
+		// 		color2: { value: colors.color2 },
+		// 		color3: { value: colors.color3 },
+		// 	}
+		// });
 
-		shaderMaterial_harmonic_zeta_inverse = new THREE.ShaderMaterial({
-			vertexShader: vertexShader,
-			fragmentShader: fragmentShader_harmonic_zeta_inverse,
-			uniforms: {
-				...uniformsBase,
-				color1: { value: colors.color1 },
-				color2: { value: colors.color2 },
-				color3: { value: colors.color3 },
-			}
-		});
+		// shaderMaterial_harmonic_zeta_inverse = new THREE.ShaderMaterial({
+		// 	vertexShader: vertexShader,
+		// 	fragmentShader: fragmentShader_harmonic_zeta_inverse,
+		// 	uniforms: {
+		// 		...uniformsBase,
+		// 		color1: { value: colors.color1 },
+		// 		color2: { value: colors.color2 },
+		// 		color3: { value: colors.color3 },
+		// 	}
+		// });
 
 		shaderMaterial_harmonic_zeta_simple_scaled = new THREE.ShaderMaterial({
 			vertexShader: vertexShader,
@@ -101,6 +105,28 @@
 		shaderMaterial_jacobi_theta_simple = new THREE.ShaderMaterial({
 			vertexShader: vertexShader,
 			fragmentShader: fragmentShader_jacobi_theta_simple,
+			uniforms: {
+				...uniformsBase,
+				color1: { value: colors.color1 },
+				color2: { value: colors.color2 },
+				color3: { value: colors.color3 },
+			}
+		});
+
+		shaderMaterial_jacobi_theta_primes = new THREE.ShaderMaterial({
+			vertexShader: vertexShader,
+			fragmentShader: fragmentShader_jacobi_theta_primes,
+			uniforms: {
+				...uniformsBase,
+				color1: { value: colors.color1 },
+				color2: { value: colors.color2 },
+				color3: { value: colors.color3 },
+			}
+		});
+
+		shaderMaterial_jacobi_theta_primes_inverted = new THREE.ShaderMaterial({
+			vertexShader: vertexShader,
+			fragmentShader: fragmentShader_jacobi_theta_primes_inverted,
 			uniforms: {
 				...uniformsBase,
 				color1: { value: colors.color1 },
@@ -135,23 +161,23 @@
 		// window.addEventListener('navigate', onNavigate);
 	}
 
-	function setSimple () {
+	// function setSimple () {
 
-		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_simple);
-		scene.add(plane4);
-	}
+	// 	let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_simple);
+	// 	scene.add(plane4);
+	// }
 
-	function setInverse() {
+	// function setInverse() {
 
-		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_inverse);
-		scene.add(plane4);
-	}
+	// 	let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_inverse);
+	// 	scene.add(plane4);
+	// }
 
-	function setSimpleScaled() {
+	// function setSimpleScaled() {
 
-		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_simple_scaled);
-		scene.add(plane4);
-	}
+	// 	let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_harmonic_zeta_simple_scaled);
+	// 	scene.add(plane4);
+	// }
 
 	function setInverseScaled() {
 
@@ -165,6 +191,18 @@
 		scene.add(plane4);
 	}
 
+	function setJacobiThetaPrimes() {
+
+		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_jacobi_theta_primes);
+		scene.add(plane4);
+	}
+
+	function setJacobiThetaPrimesInverted() {
+
+		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_jacobi_theta_primes_inverted);
+		scene.add(plane4);
+	}
+
 	function setScene () {
 
 		// if ($page.url.pathname == '/') {
@@ -175,7 +213,7 @@
 		// 	setInverse();
 		// }
 
-		// if ($page.url.pathname == '/scaled') {
+		// if ($page.url.pathname == '/') {
 		// 	setSimpleScaled();
 		// }
 
@@ -183,12 +221,20 @@
 			setInverseScaled();
 		}
 
-		if ($page.url.pathname == '/inverse-scaled') {
-			setInverseScaled();
-		}
+		// if ($page.url.pathname == '/inverse-scaled') {
+		// 	setInverseScaled();
+		// }
 
 		if ($page.url.pathname == '/jacobi-theta') {
 			setJacobiThetaSimple();
+		}
+
+		if ($page.url.pathname == '/jacobi-theta-primes') {
+			setJacobiThetaPrimes();
+		}
+
+		if ($page.url.pathname == '/jacobi-theta-primes-inverted') {
+			setJacobiThetaPrimesInverted();
 		}
 	}
 

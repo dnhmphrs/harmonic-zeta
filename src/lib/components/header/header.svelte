@@ -37,9 +37,21 @@
 			name: 'harmonic Zeta',
 			href: '/'
 		},
+		// {
+		// 	name: 'harmonic Zeta - inverted',
+		// 	href: '/inverted'
+		// },
 		{
 			name: 'jacobi theta',
 			href: '/jacobi-theta'
+		},
+		// {
+		// 	name: 'jacobi theta - primes',
+		// 	href: '/jacobi-theta-primes'
+		// },
+		{
+			name: 'harmonic Zeta - alternate',
+			href: '/jacobi-theta-primes-inverted'
 		},
 	];
 

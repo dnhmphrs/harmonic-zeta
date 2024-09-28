@@ -5,37 +5,33 @@ uniform vec3 color2;
 uniform vec3 color3;
 uniform vec2 mouse;
 
-float scale = 1000.0;
-float lineWidth = 0.1;  // Width of the horizontal lines
+float pi = 3.14159265359;
+float scale = 100.0;
+float lineWidth = 0.1;   // Width of the vertical lines
 
-// Function to compute the harmonic number H_n
-float harmonicNumber(float n) {
-    return log(n) + 0.5772156649 + 1.0 / (2.0 * n); // Approximation: H_n ≈ ln(n) + γ + 1/(2n)
-}
-
-// // Function to compute zeta* as Σ σ⋅n^it / H_n
-// vec2 zetaStarComplex(float sigma, float t) {
+// Function to compute the Jacobi Theta function as a sum approximation
+// vec2 jacobiTheta(float z, float tau) {
 //     vec2 sum = vec2(0.0, 0.0); // (real part, imaginary part)
-//     const int N = 200; // Number of terms in the series for approximation
+//     const int N = 25; // Number of terms in the series for approximation
 
-//     for (int n = 1; n <= N; ++n) {
-//         // float hn = harmonicNumber(float(n));  // Compute H_n
-//         float angle = t * log(float(n));      // Angle for n^it = cos(t log n) + i sin(t log n)
-        
-//         // Compute σ * n^it
-//         float realPart = sigma * cos(angle);  // Real part of σ * n^it
-//         float imaginaryPart = sigma * sin(angle);  // Imaginary part of σ * n^it
 
-//         // Sum the real and imaginary parts divided by H_n
-//         sum.x += realPart;
-//         sum.y += imaginaryPart;
+//     for (int n = -N; n <= N; ++n) {
+//         float nSquaredTau = float(n * n) * tau;
+//         float nZ = float(n) * z;
+
+//         // Compute the angle for e^{2 * pi * i * (n^2 * tau + n * z)}
+//         float angle = 2.0 * pi * (nSquaredTau + nZ);
+
+//         // Real and imaginary parts of e^{i * angle}
+//         sum.x += cos(angle);
+//         sum.y += sin(angle);
 //     }
 
 //     return sum; // Return the complex result as (real, imaginary)
 // }
 
-vec2 zetaStarComplex(float sigma, float t) {
-    vec2 sum = vec2(0.0, 0.0); // (real part, imaginary part)
+vec2 jacobiTheta(float sigma, float t) {
+    vec2 sum = vec2(0.0, 0.0); // Initialize (real, imaginary) sum
     
     // Hardcoded prime numbers (up to a reasonable limit, for example, the first 168 primes up to 1000)
     int primes[256] = int[256](
@@ -67,52 +63,48 @@ vec2 zetaStarComplex(float sigma, float t) {
     // Number of primes in the array
     const int numPrimes = 168;
 
-    // // Hardcoded prime numbers (up to a reasonable limit, for example, the first 168 primes up to 1000)
-    // int primes[2] = int[2](
-    //     2, 3
-    // );
-
-    // // Number of primes in the array
-    // const int numPrimes = 2;
-
     for (int i = 0; i < numPrimes; ++i) {
-        float prime = float(primes[i]);
-        float angle = t * log(prime);      // Angle for prime^it = cos(t log prime) + i sin(t log prime)
+        float p = float(primes[i]);
+        float angle = t * p; // Use logarithmic spacing for primes
 
-        // Compute σ * prime^it
-        float realPart = sigma * cos(angle);  // Real part of σ * prime^it
-        float imaginaryPart = sigma * sin(angle);  // Imaginary part of σ * prime^it
+        // Real part of the prime-modified theta function
+        float realPart = cos(angle);
+        
+        // Imaginary part of the prime-modified theta function
+        float imaginaryPart = sin(angle);
 
-        // Sum the real and imaginary parts
-        sum.x += realPart;
-        sum.y += imaginaryPart;
+        // Accumulate the sum (real and imaginary components)
+        sum.x += realPart / sigma;
+        sum.y += imaginaryPart / sigma;
     }
 
-    return sum; // Return the complex result as (real, imaginary)
+    return sum;
 }
 
 void main() {
     // Map the fragment coordinates to the complex plane
-    float adaptedScale = scale * mouse.x;
-    float sigma = (vUv.y * scale) - (0.5 * scale); // Real part of s
-    float t = (vUv.x * adaptedScale) - (0.5 * adaptedScale);     // Imaginary part of s
+    float adaptedScale = scale;
+    float z = (vUv.y * 1.0 * adaptedScale) - (0.5 * adaptedScale);     // z coordinate (related to complex input s)
+    float tau = (vUv.x * 1.0 * adaptedScale) - (0.5 * adaptedScale);   // tau coordinate (analogous to sigma)
 
-    // Compute zetaStarComplex(sigma, t)
-    vec2 zetaStarValue = zetaStarComplex(sigma, t);
+    float adaptedZ = z * 1.0;
+    float adaptedTau = 0.05 * tau * abs(mouse.x);
+
+    // Compute the Jacobi Theta function
+    vec2 thetaValue = jacobiTheta(adaptedZ, adaptedTau);
 
     // Get the magnitude / phase of the complex value for visualization
-    float magnitude = length(zetaStarValue); // Magnitude of the complex number
-    // float phase = atan(zetaStarValue.y, zetaStarValue.x); // Compute the phase
-
+    float magnitude = length(thetaValue); // Magnitude of the complex number
+    float phase = atan(thetaValue.y, thetaValue.x); // Compute the phase
 
     // Normalize the magnitude / phase to map to color range
     float normalizedMagnitude = 0.5 + 0.5 * magnitude;
-    // float normalizedPhase = 0.5 + 0.5 * phase / 3.14159265359; // Normalize phase to [0, 1] range
+    float normalizedPhase = 0.5 + 0.5 * phase / 3.14159265359; // Normalize phase to [0, 1] range
 
     // Create gradients for visualization
     vec3 gradient1 = mix(color1, color2, normalizedMagnitude);
     vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25 * sin(normalizedMagnitude * abs((1.0 * mouse.y))));
-    
+
     // Define the first 29 non-trivial zeros of the zeta function (imaginary parts)
     float zeros[29] = float[](14.135, 21.022, 25.011, 30.425, 32.935, 
                               37.586, 40.918, 43.327, 48.005, 49.773, 
@@ -123,18 +115,11 @@ void main() {
 
     // Check if the current y position (t) is close to one of the zero values and draw horizontal lines
     for (int i = 0; i < 29; i++) {
-        if (abs(t - zeros[i]) < lineWidth || abs(t + zeros[i]) < lineWidth) {
+        if (abs(adaptedTau - zeros[i]) < lineWidth || abs(adaptedTau + zeros[i]) < lineWidth) {
             gradient2 = vec3(0.0, 0.5, 0.5); // Red line at the non-trivial zero position (both positive and negative)
         }
     }
-
-    // Add vertical red lines at every integer on the y-axis (mapped to the x-axis)
-    // float xPos = mod(t, 6.0); // Position for integer lines on the x-axis
-    // if (abs(xPos) < abs(lineWidth)) {
-    //     gradient2 = vec3(0.0, 0.3, 0.4); // Red line
-    // }
-    
-    
+        
     // Set the fragment color
     gl_FragColor = vec4(gradient2, 1.0);
 }
