@@ -34,11 +34,11 @@ float lineWidth = 0.1;   // Width of the vertical lines
 vec2 jacobiTheta(float z, float tau) {
     vec2 sum = vec2(0.0, 0.0); // Initialize (real, imaginary) sum
 
-    const int N = 50;
+    const int N = 25;
 
     for (int i = -N; i < N; ++i) {
         float n = float(i);
-        float angle = tau * n * n + z * n;
+        float angle = tau * n * n + z * tau * n;
 
         // Real part of the prime-modified theta function
         float realPart = cos(angle);
