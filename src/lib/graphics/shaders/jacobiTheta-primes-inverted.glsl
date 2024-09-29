@@ -38,7 +38,16 @@ vec2 jacobiTheta(float z, float tau) {
 
     for (int i = -N; i < N; ++i) {
         float n = float(i);
-        float angle = tau * n * n + z * tau * n;
+
+        float nSquaredTau = n * n * tau;
+        
+        float angle = nSquaredTau + z * tau * n ;
+
+        
+        // float nZ = float(n) * z;
+
+        // Compute the angle for e^{2 * pi * i * (n^2 * tau + n * z)}
+        // float angle = 2.0 * pi * (nSquaredTau + nZ);
 
         // Real part of the prime-modified theta function
         float realPart = cos(angle);
@@ -61,7 +70,7 @@ void main() {
     float z = (vUv.y * 1.0 * adaptedScale) - (0.5 * adaptedScale);     // z coordinate (related to complex input s)
     float tau = (vUv.x * 1.0 * adaptedScale) - (0.5 * adaptedScale);   // tau coordinate (analogous to sigma)
 
-    float adaptedZ = z * 1.0 * abs(mouse.y);
+    float adaptedZ = z * abs(mouse.y);
     float adaptedTau =  tau * abs(mouse.x);
 
     // Compute the Jacobi Theta function
@@ -77,7 +86,7 @@ void main() {
 
     // Create gradients for visualization
     vec3 gradient1 = mix(color1, color2, normalizedMagnitude);
-    vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25 * cos(normalizedMagnitude * abs((1.0 * mouse.y))));
+    vec3 gradient2 = mix(color3, gradient1, 0.25 + 0.25  * sin(normalizedMagnitude * abs((1.0 * mouse.x))));
 
     // // Define the first 29 non-trivial zeros of the zeta function (imaginary parts)
     // float zeros[29] = float[](14.135, 21.022, 25.011, 30.425, 32.935, 
