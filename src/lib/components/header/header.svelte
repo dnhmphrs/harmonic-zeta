@@ -45,10 +45,10 @@
 			name: 'jacobi theta',
 			href: '/jacobi-theta'
 		},
-		// {
-		// 	name: 'jacobi theta - primes',
-		// 	href: '/jacobi-theta-primes'
-		// },
+		{
+			name: 'theta-zeta lattice',
+			href: '/theta-zeta-lattice'
+		},
 		{
 			name: 'jacobi theta - modified',
 			href: '/jacobi-theta-modified'
