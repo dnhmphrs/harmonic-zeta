@@ -14,11 +14,11 @@
 	import fragmentShader_harmonic_zeta_inverse_scaled from './shaders/harmonicZetaFrag-inverse-scaled.glsl';
 	import fragmentShader_jacobi_theta_simple from './shaders/jacobiTheta-simple.glsl';
 	import fragmentShader_theta_zeta_lattice from './shaders/thetaZetaLattice.glsl';
-	import fragmentShader_jacobi_theta_modified from './shaders/jacobiTheta-modified.glsl';
+	import normalizedPhasefragmentShader_zeta_mirrored from './shaders/zeta_mirrored.glsl';
 
 
 	// let shaderMaterial_harmonic_zeta_simple, shaderMaterial_harmonic_zeta_inverse, shaderMaterial_harmonic_zeta_simple_scaled;
-	let shaderMaterial_harmonic_zeta_simple_scaled, shaderMaterial_jacobi_theta_simple, shaderMaterial_harmonic_zeta_inverse_scaled, shaderMaterial_theta_zeta_lattice, shaderMaterial_jacobi_theta_modified;
+	let shaderMaterial_harmonic_zeta_simple_scaled, shaderMaterial_jacobi_theta_simple, shaderMaterial_harmonic_zeta_inverse_scaled, shaderMaterial_theta_zeta_lattice, shaderMaterial_zeta_mirrored;
 
 	let container;
 	let stats;
@@ -124,9 +124,9 @@
 			}
 		});
 
-		shaderMaterial_jacobi_theta_modified = new THREE.ShaderMaterial({
+		shaderMaterial_zeta_mirrored = new THREE.ShaderMaterial({
 			vertexShader: vertexShader,
-			fragmentShader: fragmentShader_jacobi_theta_modified,
+			fragmentShader: normalizedPhasefragmentShader_zeta_mirrored,
 			uniforms: {
 				...uniformsBase,
 				color1: { value: colors.color1 },
@@ -197,9 +197,9 @@
 		scene.add(plane4);
 	}
 
-	function setJacobiThetaModified() {
+	function setZetaMirrored() {
 
-		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_jacobi_theta_modified);
+		let plane4 = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), shaderMaterial_zeta_mirrored);
 		scene.add(plane4);
 	}
 
@@ -233,8 +233,8 @@
 			setThetaZetaLattice();
 		}
 
-		if ($page.url.pathname == '/jacobi-theta-modified') {
-			setJacobiThetaModified();
+		if ($page.url.pathname == '/zeta-mirrored') {
+			setZetaMirrored();
 		}
 	}
 

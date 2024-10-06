@@ -50,8 +50,8 @@
 			href: '/theta-zeta-lattice'
 		},
 		{
-			name: 'jacobi theta - modified',
-			href: '/jacobi-theta-modified'
+			name: 'zeta mirrored',
+			href: '/zeta-mirrored'
 		},
 	];
 
