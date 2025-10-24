@@ -12,7 +12,7 @@
 	// import fragmentShader_harmonic_zeta_inverse from './shaders/harmonicZetaFrag-inverse.glsl';
 	import fragmentShader_harmonic_zeta_simple_scaled from './shaders/harmonicZetaFrag-simple-scaled.glsl';
 	import fragmentShader_harmonic_zeta_inverse_scaled from './shaders/harmonicZetaFrag-inverse-scaled.glsl';
-	import fragmentShader_jacobi_theta_simple from './shaders/jacobiTheta-simple.glsl';
+	import fragmentShader_jacobi_theta_simple from './shaders/jacobiTheta-modified.glsl';
 	import fragmentShader_theta_zeta_lattice from './shaders/thetaZetaLattice.glsl';
 	import normalizedPhasefragmentShader_zeta_mirrored from './shaders/zeta_mirrored.glsl';
 
